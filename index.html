@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>TECNO RICHAR!</title>
+    <link rel="icon" href="./TECNO RICHAR.png">
+</head>
+
+<body>
+    <header>
+        <h1>TECNO RICHAR</h1>
+        <nav>
+            <ul>
+                <li><a href="#inicio" class="section-button" onclick="mostrarSeccion('inicio')">Inicio</a></li>
+                <li><a href="#menu" class="section-button" onclick="mostrarSeccion('menu')">Productos</a></li>
+                <li><a href="#contacto" class="section-button" onclick="mostrarSeccion('contacto')">Contacto</a></li>
+                <li><button class="section-button" onclick="verCarrito()">Pedido(0)</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="inicio" class="seccion">
+        <h2>¡Bienvenidos a TECNO RICHAR</h2>
+            <p>En Este negocio, nos dedicamos a ofrecer soluciones integrales para el cuidado de tus dispositivos digitales y el máximo rendimiento de tu experiencia tecnológica. Somos más que una empresa de limpieza y mantenimiento de computadoras; somos tu aliado confiable en el mundo digital. </p>
+            <p>Nuestro equipo de expertos está comprometido en proporcionar servicios de alta calidad, desde la limpieza meticulosa y el mantenimiento preventivo de tus equipos, hasta la entrega de licencias de software y cuentas de streaming que satisfagan todas tus necesidades digitales. </p>
+            <p>En TECNO RICHAR, entendemos la importancia de mantener tus dispositivos en óptimas condiciones y asegurarnos de que estés aprovechando al máximo todas las herramientas digitales disponibles. Con nosotros, puedes estar seguro de que tu tecnología está en buenas manos. </p>
+            <p>¡Déjanos cuidar de tus equipos mientras tú te enfocas en lo que realmente importa! ¡Contáctanos hoy mismo y descubre cómo podemos llevar tu experiencia tecnológica al siguiente nivel con TECNO RICHAR! </p>
+            
+    </section>
+
+    <section id="menu" class="seccion">
+        <h2>Nuestros Servicios</h2>
+        <ul id="menu-lista"></ul>
+    </section>
+
+    <section id="carrito-section" class="seccion">
+        <h2>Carrito de Compras</h2>
+        <ul id="carrito-lista"></ul>
+        <p>Total: $<span id="total">0</span></p>
+
+        <button onclick="realizarCompra()">Ir al Chat</button>
+    </section>
+
+    <section id="contacto" class="seccion">
+        <h2>CONTACTO</h2>
+        <address>
+             <h2>  321 278 77 96 </h2>
+            Responde:<h2>
+            </address>
+            <h2>RICHAR ANDREY BARRETO ZUBIETA </h2>
+            <h2>Estamos ubicados en:<h2>
+                Calle 5 #3a 25<br>
+                Sabanalarga-Casanare<br>
+                <p>                 </p>
+                Carrera 16 #4 Sur 18<br>
+                Sogamoso-Boyaca <br>
+            <h2>REDES SOCIALES <h2>
+        </address>
+
+        <a href="https://www.instagram.com/richar__barreto" target="_blank">
+            <img src="instagram_logo.png.png" alt="Instagram" style="width: 50px; height: auto;">
+        </a>
+        
+        <a href="https://www.facebook.com/profile.php?id=100005410545990" target="_blank">
+            <img src="facebook_logo.png.png" alt="Facebook" style="width: 50px; height: auto;">
+        </a>
+
+        <a href="https://wa.link/awvx9v" target="_blank">
+            <img src="WhatsApp.png" alt="WhatsApp" style="width: 50px; height: auto;">
+
+    </section>
+
+    <footer>
+        <p>&copy; Escribenos dando Click Aqui. </p>
+    </footer>
+
+    <script>
+        let carrito = [];
+        let total = 0;
+
+        function mostrarSeccion(seccionId) {
+  
+            const secciones = document.querySelectorAll('.seccion');
+            secciones.forEach(seccion => seccion.classList.remove('mostrando', 'oculta-izquierda'));
+
+            const seccionSeleccionada = document.getElementById(seccionId);
+            if (seccionSeleccionada) {
+                seccionSeleccionada.classList.add('mostrando');
+
+                if (seccionId === 'menu') {
+                    mostrarMenu();
+                }
+            }
+
+            if (seccionId === 'carrito-section') {
+                actualizarCarrito();
+            }
+            activarPestana(seccionId);
+        }
+        
+        window.onload = function() {
+            const secciones = document.querySelectorAll('.seccion');
+            secciones.forEach(seccion => {
+                if (!seccion.classList.contains('mostrando')) {
+                    seccion.classList.add('oculta-izquierda');
+                }
+            });
+            mostrarSeccion('menu');
+        };
+
+        function activarPestana(id) {
+            const pestanas = document.querySelectorAll('nav ul li a');
+            pestanas.forEach(pestana => {
+                pestana.classList.remove('activo');
+            });
+
+            const pestanaActiva = document.querySelector(`nav ul li a[href="#${id}"]`);
+            if (pestanaActiva) {
+                pestanaActiva.classList.add('activo');
+            }
+        }
+
+        function verCarrito() {
+            mostrarSeccion('carrito-section');
+        }
+
+        function mostrarMenu() {
+            const menuSection = document.getElementById('menu');
+            const menuList = menuSection.querySelector('ul');
+           
+            menuList.innerHTML = "";
+           
+            const elementosMenu = [
+            { nombre: "Licencia Antivirus Anual", precio: 50000, imagen: "Antivirus.png" },
+            { nombre: "Office 2016", precio: 20000, imagen: "Office2016.png" },
+            { nombre: "Office 2019", precio: 30000, imagen: "Office2019.png" },
+            { nombre: "Office 365", precio: 50000, imagen: "Office365.png" },
+            { nombre: "Licencia Windows 10", precio: 80000, imagen: "Win10.png" },
+            { nombre: "Licencia Windows 11", precio: 80000, imagen: "Win11.png" },
+            { nombre: "Pantalla Netflix", precio: 12000, imagen: "Netflix.png" },
+            { nombre: "Pantalla Disnep +", precio: 10000, imagen: "Disnep.png" },
+            { nombre: "Cuenta CrunchyRoll", precio: 8000, imagen: "Crunchy.png" },
+            { nombre: "Pantalla HBO Max", precio: 8000, imagen: "HBO.png" },
+            { nombre: "Pantalla Prime Video", precio: 8000, imagen: "Prime.png" },
+            { nombre: "YouTube Premium", precio: 9000, imagen: "YouTube.png" },
+            { nombre: "Canva Premium (Mes)", precio: 10000, imagen: "Canva.png" },
+            { nombre: "IPTV (Mes)", precio: 10000, imagen: "IPTV.png" },
+            ];
+
+            elementosMenu.forEach(elemento => {
+                const li = document.createElement("li");
+                li.innerHTML = `
+                <img src="${elemento.imagen}" alt="${elemento.nombre}">
+            <p>${elemento.nombre} - $${elemento.precio}</p>
+            <button class="button-rgb" onclick="agregarAlCarritoDesdeMenu('${elemento.nombre}', ${elemento.precio})">Agregar al Carrito</button>`;
+                menuList.appendChild(li);
+            });
+        }
+
+        function agregarAlCarritoDesdeMenu(item, precio) {
+            const id = carrito.length;
+            carrito.push({ id, item, precio });
+            total += precio;
+            actualizarCarrito();
+        }
+
+        function eliminarDelCarrito(id) {
+            const productoEliminado = carrito.find((item) => item.id === id);
+            if (productoEliminado) {
+                total -= productoEliminado.precio;
+                carrito = carrito.filter((item) => item.id !== id);
+                actualizarCarrito();
+            }
+        }
+
+        function actualizarCarrito() {
+            const carritoLista = document.getElementById("carrito-lista");
+            const totalElemento = document.getElementById("total");
+
+            carritoLista.innerHTML = "";
+            carrito.forEach((item) => {
+                const li = document.createElement("li");
+                li.innerHTML = `${item.item} - $${item.precio} <button onclick="eliminarDelCarrito(${item.id})">Eliminar</button>`;
+                carritoLista.appendChild(li);
+            });
+
+            totalElemento.textContent = total;
+            actualizarBotonCarrito();
+        }
+
+        function actualizarBotonCarrito() {
+            const carritoBtn = document.querySelector("nav ul li button");
+            carritoBtn.textContent = `Pedido (${carrito.length})`;
+        }
+
+        function realizarCompra() {
+        if (carrito.length === 0) {
+            alert("Error: No hay elementos en el carrito. Agregue productos antes de realizar la compra.");
+            return;
+        }
+
+        let mensaje = "Hola, quiero hacer un pedido:\n";
+        carrito.forEach(item => {
+            mensaje += `- ${item.item}: $${item.precio}\n`;
+        });
+        mensaje += `Total: $${total}\n`;
+
+        let numeroWhatsApp = "573212787796"; // Número de WhatsApp con código de país
+        let enlaceWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+        
+        window.open(enlaceWhatsApp, "_blank");
+        reiniciarCarrito();
+         }
+
+        function reiniciarCarrito() {
+            carrito = [];
+            total = 0;
+            actualizarCarrito();
+            mostrarSeccion('inicio');
+        }
+
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+        }
+
+    </script>
+
+    <style>
+
+        body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url('FONDO.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        }
+
+        .section-button {
+        background-color: #165565;
+        border: none;
+        color: rgb(248, 246, 246);
+        padding: 1.2vh 2.5vw; 
+        text-align: center;
+        font-size: clamp(10px, 1.5vw, 16px); 
+        margin: 0.5vh 0.3vw;
+        transition-duration: 0.5s;
+        cursor: pointer;
+        border-radius: 12px;
+        box-shadow: inset 0 0 4px rgb(255, 0, 0);
+        }
+
+        .section-button:hover {
+            background-color: rgb(2, 238, 226); 
+            color: rgb(248, 248, 248); 
+        }
+        header {
+            background-color: #02074e9d;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        
+        nav ul li a {
+             text-decoration: none;
+             color: #ffffff;
+             font-weight: bold;
+             padding: 5px 10px;
+        }
+
+        nav ul li a:hover {
+            background-color: #000000; 
+        }      
+
+        nav ul li a.activo {
+            background-color: #000000; 
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .seccion {
+            display: none;
+            transform-origin: right center;
+            transition: transform 0.5s ease-in-out;;
+        }
+
+        .mostrar {
+            display: block;
+            transform: rotateY(0deg); 
+        }
+        .seccion.mostrando {
+            display: block;
+             transform: rotateY(0deg);
+        }
+
+        .seccion.oculta-izquierda {
+            display: block;
+            transform: rotateY(-90deg);
+        }
+
+        #menu nav {
+            display: none;
+        }
+
+        section {
+        padding: 5vh 3vw;
+        text-align: center;
+        max-width: 95%;
+        margin: auto;
+        }
+
+        section h2 {
+            color: #ffffff;
+        }
+
+        footer {
+        background-color: #072127;
+        color: #ffffff;
+        padding: 1.5vh;
+        text-align: center;
+        font-size: clamp(12px, 1vw, 16px); 
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        }
+
+        #menu-lista {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px; 
+        padding: 10px;
+        }
+
+        #menu-lista li {
+        flex: 1 1 250px; 
+        max-width: 300px; 
+        padding: 15px;
+        text-align: center;
+        background: rgba(44, 100, 98, 0.719);
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+         }
+
+        #menu-lista img {
+        width: 100%;
+        max-width: 250px; 
+        height: auto; 
+        object-fit: contain; 
+        margin: 10px; 
+        }   
+
+        :root {
+            --color1: 255, 0, 0; 
+            --color2: 0, 255, 0; 
+            --color3: 0, 0, 255; 
+        }
+
+        @keyframes rgbLight {
+          0% { background-color: rgb(var(--color1)); }
+         50% { background-color: rgb(var(--color2)); }
+          100% { background-color: rgb(var(--color3)); }
+        }
+
+        .button-iluminado {
+           animation: rgbLight 5s infinite alternate;
+        }
+
+        button {
+        background-color: rgba(255, 255, 255, 0.2); /* Blanco semitransparente */
+        border: 2px solid rgba(255, 255, 255, 0.5); /* Borde semitransparente */
+        color: white; /* Texto en blanco */
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+        @keyframes rgbEffect {
+    0% { border-color: rgb(255, 0, 0); }
+    33% { border-color: rgb(0, 255, 0); }
+    66% { border-color: rgb(0, 0, 255); }
+    100% { border-color: rgb(255, 0, 0); }
+    }
+
+    .button-rgb {
+        background: transparent;
+        border: 2px solid white;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 10px;
+        animation: rgbEffect 3s infinite linear;
+    }
+
+    .button-rgb:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    </style>
+    
+</body>
+</html>
